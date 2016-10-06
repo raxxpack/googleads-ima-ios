@@ -29,6 +29,14 @@
   [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
 }
 
+- (NSString *)documentsPathForFileName:(NSString *)name
+{
+    NSArray *paths =     NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    
+    return [documentsPath stringByAppendingPathComponent:name];
+}
+
 // Populate the video array.
 - (void)initVideos {
   UIImage *dfpThumbnail = [UIImage imageNamed:@"dfp.png"];
@@ -42,7 +50,7 @@
                              tag:kPrerollTag],
     [[Video alloc] initWithTitle:@"Skippable Pre-roll"
                        thumbnail:androidThumbnail
-                           video:kAndroidContentPath
+                           video:[self documentsPathForFileName:@"empty.mpeg"]
                              tag:kSkippableTag],
     [[Video alloc] initWithTitle:@"Post-roll"
                        thumbnail:bunnyThumbnail
